@@ -13,6 +13,12 @@
         android:theme="@style/Theme.OnlineQuiz"
         tools:targetApi="31">
         <activity
+            android:name=".QuizListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuizHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".QuizRegisterActivity"
             android:exported="false" />
         <activity
