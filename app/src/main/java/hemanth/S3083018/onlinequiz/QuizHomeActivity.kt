@@ -1,7 +1,11 @@
-package com.example.onlinequiz
+package hemanth.S3083018.onlinequiz
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,9 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,11 +40,16 @@ import androidx.compose.ui.unit.sp
 class QuizHomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContent {
+            QuizHomeActivityScreen()
+        }
     }
 }
 
 @Composable
 fun QuizHomeActivityScreen() {
+
+    val context = LocalContext.current as Activity
 
     Column(
         modifier = Modifier
@@ -94,7 +103,7 @@ fun QuizHomeActivityScreen() {
             contentPadding = PaddingValues(8.dp)
         ) {
             items(categories) { category ->
-                CategoryItem(category)
+                CategoryItem(context,category)
             }
         }
 
@@ -109,11 +118,14 @@ fun QuizHomeActivityScreenPreview() {
 
 
 @Composable
-fun CategoryItem(category: QuizCategory) {
+fun CategoryItem(context: Activity,category: QuizCategory) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .clickable { /* Handle category click */ },
+            .clickable {
+                context.startActivity(Intent(context, TakeQuizActivity::class.java))
+                context.finish()
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -126,8 +138,8 @@ fun CategoryItem(category: QuizCategory) {
         )
         Text(
             text = category.name,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Black,
             modifier = Modifier.padding(top = 4.dp)
         )
     }

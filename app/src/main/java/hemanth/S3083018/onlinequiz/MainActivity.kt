@@ -1,9 +1,8 @@
-package com.example.onlinequiz
+package hemanth.S3083018.onlinequiz
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,14 +10,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -35,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.onlinequiz.ui.theme.OnlineQuizTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -69,8 +64,18 @@ fun QuizStartingPoint()
         QuizMainActivity()
 
     } else {
-        context.startActivity(Intent(context, QuizLoginActivity::class.java))
-        context.finish()
+
+        val loginStatus = UserDataSP.fetchLoginState(context)
+
+        if(loginStatus)
+        {
+            context.startActivity(Intent(context, QuizHomeActivity::class.java))
+            context.finish()
+        }else{
+            context.startActivity(Intent(context, QuizLoginActivity::class.java))
+            context.finish()
+        }
+
     }
 
 }

@@ -5,6 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizLoginActivity">
+    tools:context="hemanth.S3083018.onlinequiz.QuizLoginActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

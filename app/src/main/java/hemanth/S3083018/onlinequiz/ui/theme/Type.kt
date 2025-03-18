@@ -1,4 +1,4 @@
-package com.example.onlinequiz.ui.theme
+package hemanth.S3083018.onlinequiz.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

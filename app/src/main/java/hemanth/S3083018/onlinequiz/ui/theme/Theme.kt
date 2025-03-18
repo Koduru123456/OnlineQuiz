@@ -1,6 +1,5 @@
-package com.example.onlinequiz.ui.theme
+package hemanth.S3083018.onlinequiz.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

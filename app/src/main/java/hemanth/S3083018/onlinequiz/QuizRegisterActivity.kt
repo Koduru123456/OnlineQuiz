@@ -1,12 +1,12 @@
-package com.example.onlinequiz
+package hemanth.S3083018.onlinequiz
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,8 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.database.FirebaseDatabase
 
 class QuizRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,7 +142,45 @@ fun QuizRegisterScreen() {
                         width = 2.dp,
                         color = colorResource(id = R.color.primary_color),
                     )
-                    .padding(vertical = 8.dp, horizontal = 12.dp),
+                    .padding(vertical = 8.dp, horizontal = 12.dp)
+                    .clickable {
+                        when {
+
+                            userName.isBlank() -> {
+                                Toast.makeText(context, "UserName missing", Toast.LENGTH_SHORT)
+                                    .show()
+
+                            }
+
+                            userMailId.isBlank() -> {
+                                Toast.makeText(context, "EmailId missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            userQualification.isBlank() -> {
+                                Toast.makeText(context, "city missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            userAccountPin.isBlank() -> {
+                                Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                            else -> {
+
+                                val userData = UserData(
+                                    userName,
+                                    userMailId,
+                                    userQualification,
+                                    userAccountPin
+                                )
+
+                                registerUserOnlineQuiz(userData, context)
+
+                            }
+                        }
+                    },
                 text = "Register",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -191,8 +228,47 @@ fun QuizRegisterScreen() {
     }
 }
 
+
+fun registerUserOnlineQuiz(userData: UserData, context: Context) {
+
+    val firebaseDatabase = FirebaseDatabase.getInstance()
+    val databaseReference = firebaseDatabase.getReference("OnlineQuizData")
+
+    databaseReference.child(userData.emailId.replace(".", ","))
+        .setValue(userData)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(context, "You Registered Successfully", Toast.LENGTH_SHORT)
+                    .show()
+//                context.startActivity(Intent(context, CheckInActivity::class.java))
+//                (context as Activity).finish()
+
+            } else {
+                Toast.makeText(
+                    context,
+                    "Registration Failed",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        .addOnFailureListener { _ ->
+            Toast.makeText(
+                context,
+                "Something went wrong",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun QuizRegisterScreenPreview() {
     QuizRegisterScreen()
 }
+
+data class UserData(
+    var userName : String = "",
+    var emailId : String = "",
+    var qualification : String = "",
+    var password: String = ""
+)

@@ -1,12 +1,13 @@
-package com.example.onlinequiz
+package hemanth.S3083018.onlinequiz
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,6 +37,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.database.FirebaseDatabase
+
 
 class QuizLoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,8 @@ class QuizLoginActivity : ComponentActivity() {
 
     }
 }
+
+//hemanth.S3083018.travelguide
 
 @Composable
 fun QuizLoginScreen() {
@@ -112,13 +117,40 @@ fun QuizLoginScreen() {
                     .padding(horizontal = 12.dp)
                     .background(
                         color = colorResource(id = R.color.primary_color),
-
                         )
                     .border(
                         width = 2.dp,
                         color = colorResource(id = R.color.primary_color),
                     )
-                    .padding(vertical = 8.dp, horizontal = 12.dp),
+                    .padding(vertical = 8.dp, horizontal = 12.dp)
+                    .clickable {
+                        when{
+
+
+                            userMailId.isBlank() -> {
+                                Toast.makeText(context, "MailID missing", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                            userAccountPin.isBlank() -> {
+                                Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
+                                    .show()
+
+                            }
+                            else -> {
+
+                                val userData = UserData(
+                                    "",
+                                    userMailId,
+                                    "",
+                                    userAccountPin
+
+                                )
+
+                                loginOnlineQuiz(userData, context)
+
+                            }
+                        }
+                    },
                 text = "Login",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -170,4 +202,39 @@ fun QuizLoginScreen() {
 @Composable
 fun QuizLoginScreenPreview() {
     QuizLoginScreen()
+}
+
+fun loginOnlineQuiz(userData: UserData, context: Context) {
+
+    val firebaseDatabase = FirebaseDatabase.getInstance()
+    val databaseReference = firebaseDatabase.getReference("OnlineQuizData").child(userData.emailId.replace(".", ","))
+
+    databaseReference.get().addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val userDataLoc = task.result?.getValue(UserData::class.java)
+            if (userDataLoc != null) {
+                if (userDataLoc.password == userData.password) {
+                    Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                    UserDataSP.persistLoginState(context, true)
+                    UserDataSP.persistUserMail(context, userDataLoc.emailId)
+                    UserDataSP.persistUserName(context, userDataLoc.userName)
+                    Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
+
+                    context.startActivity(Intent(context, QuizHomeActivity::class.java))
+                    (context as Activity).finish()
+                } else {
+                    Toast.makeText(context, "Seems Incorrect Credentials", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, "Your account not found", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(
+                context,
+                "Something went wrong",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+    }
 }
