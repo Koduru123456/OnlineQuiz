@@ -69,7 +69,7 @@ fun QuizRegisterScreen() {
         Spacer(modifier = Modifier.height(54.dp))
 
         Image(
-            painter = painterResource(id = R.drawable.ic_quiz), // Replace with your actual SVG drawable
+            painter = painterResource(id = R.drawable.ic_quiz),
             contentDescription = null,
             modifier = Modifier
                 .size(150.dp)
@@ -147,23 +147,23 @@ fun QuizRegisterScreen() {
                         when {
 
                             userName.isBlank() -> {
-                                Toast.makeText(context, "UserName missing", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Enter UserName to Register", Toast.LENGTH_SHORT)
                                     .show()
 
                             }
 
                             userMailId.isBlank() -> {
-                                Toast.makeText(context, "EmailId missing", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Enter MailId to Register", Toast.LENGTH_SHORT)
                                     .show()
                             }
 
                             userQualification.isBlank() -> {
-                                Toast.makeText(context, "city missing", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Enter Qualification to Register", Toast.LENGTH_SHORT)
                                     .show()
                             }
 
                             userAccountPin.isBlank() -> {
-                                Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Enter Password to Register", Toast.LENGTH_SHORT)
                                     .show()
                             }
 
@@ -240,8 +240,8 @@ fun registerUserOnlineQuiz(userData: UserData, context: Context) {
             if (task.isSuccessful) {
                 Toast.makeText(context, "You Registered Successfully", Toast.LENGTH_SHORT)
                     .show()
-//                context.startActivity(Intent(context, CheckInActivity::class.java))
-//                (context as Activity).finish()
+                context.startActivity(Intent(context, QuizLoginActivity::class.java))
+                (context as Activity).finish()
 
             } else {
                 Toast.makeText(

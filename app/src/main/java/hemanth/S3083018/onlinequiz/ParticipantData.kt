@@ -2,7 +2,7 @@ package hemanth.S3083018.onlinequiz
 
 import android.content.Context
 
-object UserDataSP {
+object ParticipantData {
     fun persistLoginState(context: Context, value: Boolean) {
         val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
         val editor = userLogin.edit()

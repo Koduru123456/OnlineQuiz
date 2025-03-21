@@ -51,7 +51,6 @@ class QuizLoginActivity : ComponentActivity() {
     }
 }
 
-//hemanth.S3083018.travelguide
 
 @Composable
 fun QuizLoginScreen() {
@@ -128,11 +127,11 @@ fun QuizLoginScreen() {
 
 
                             userMailId.isBlank() -> {
-                                Toast.makeText(context, "MailID missing", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Enter MailId to Login", Toast.LENGTH_SHORT)
                                     .show()
                             }
                             userAccountPin.isBlank() -> {
-                                Toast.makeText(context, "Password missing", Toast.LENGTH_SHORT)
+                                Toast.makeText(context, "Enter Password to Register", Toast.LENGTH_SHORT)
                                     .show()
 
                             }
@@ -215,9 +214,9 @@ fun loginOnlineQuiz(userData: UserData, context: Context) {
             if (userDataLoc != null) {
                 if (userDataLoc.password == userData.password) {
                     Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                    UserDataSP.persistLoginState(context, true)
-                    UserDataSP.persistUserMail(context, userDataLoc.emailId)
-                    UserDataSP.persistUserName(context, userDataLoc.userName)
+                    ParticipantData.persistLoginState(context, true)
+                    ParticipantData.persistUserMail(context, userDataLoc.emailId)
+                    ParticipantData.persistUserName(context, userDataLoc.userName)
                     Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
 
                     context.startActivity(Intent(context, QuizHomeActivity::class.java))

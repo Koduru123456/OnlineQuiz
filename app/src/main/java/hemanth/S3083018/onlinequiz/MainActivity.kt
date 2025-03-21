@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,39 +47,35 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
-fun QuizStartingPoint()
-{
-    val context = LocalContext.current as Activity
-    var showSplash by remember { mutableStateOf(true) }
+fun QuizStartingPoint() {
+    var isSplashVisible by remember { mutableStateOf(true) }
 
-    DisposableEffect(Unit) {
-        val job = CoroutineScope(Dispatchers.Main).launch {
-            delay(3000)
-            showSplash = false
-        }
-        onDispose { job.cancel() }
+    val activityContext = LocalContext.current as Activity
+
+    LaunchedEffect(Unit) {
+        delay(3000)
+        isSplashVisible = false
+
     }
 
-    if (showSplash) {
+    if (isSplashVisible) {
         QuizMainActivity()
-
     } else {
+        val participantStatus = ParticipantData.fetchLoginState(activityContext)
 
-        val loginStatus = UserDataSP.fetchLoginState(context)
-
-        if(loginStatus)
-        {
-            context.startActivity(Intent(context, QuizHomeActivity::class.java))
-            context.finish()
-        }else{
-            context.startActivity(Intent(context, QuizLoginActivity::class.java))
-            context.finish()
+        if (participantStatus) {
+            activityContext.startActivity(Intent(activityContext, QuizHomeActivity::class.java))
+            activityContext.finish()
+        } else {
+            activityContext.startActivity(Intent(activityContext, QuizLoginActivity::class.java))
+            activityContext.finish()
         }
-
     }
-
 }
+
+
 
 
 @Composable
