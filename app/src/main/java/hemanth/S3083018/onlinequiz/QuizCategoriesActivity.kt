@@ -158,7 +158,6 @@ fun CategoryItem(context: Activity, category: QuizCategory) {
             contentDescription = category.name,
             modifier = Modifier
                 .size(64.dp)
-//                .clip(CircleShape)
                 .background(Color.LightGray)
         )
         Text(

@@ -205,27 +205,23 @@ fun QuizLoginScreenPreview() {
 
 fun loginOnlineQuiz(userData: UserData, context: Context) {
 
-    val firebaseDatabase = FirebaseDatabase.getInstance()
-    val databaseReference = firebaseDatabase.getReference("OnlineQuizData").child(userData.emailId.replace(".", ","))
-
-    databaseReference.get().addOnCompleteListener { task ->
+    val quizDataBase = FirebaseDatabase.getInstance()
+    quizDataBase.getReference("OnlineQuizData").child(userData.emailId.replace(".", ",")).get().addOnCompleteListener { task ->
         if (task.isSuccessful) {
             val userDataLoc = task.result?.getValue(UserData::class.java)
             if (userDataLoc != null) {
                 if (userDataLoc.password == userData.password) {
                     Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                    ParticipantData.persistLoginState(context, true)
-                    ParticipantData.persistUserMail(context, userDataLoc.emailId)
-                    ParticipantData.persistUserName(context, userDataLoc.userName)
-                    Toast.makeText(context, "Login Sucessfully", Toast.LENGTH_SHORT).show()
-
+                    ParticipantData.saveLoginState(context, true)
+                    ParticipantData.saveUserMail(context, userDataLoc.emailId)
+                    ParticipantData.saveUserName(context, userDataLoc.userName)
                     context.startActivity(Intent(context, QuizHomeActivity::class.java))
                     (context as Activity).finish()
                 } else {
-                    Toast.makeText(context, "Seems Incorrect Credentials", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Invalid details entered", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context, "Your account not found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Account Missing", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(

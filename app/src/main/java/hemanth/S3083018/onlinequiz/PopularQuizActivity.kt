@@ -54,20 +54,6 @@ class PopularQuizActivity : ComponentActivity() {
 }
 
 @Composable
-fun QuizListScreenOld(quizzes: List<Quiz>) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(quizzes) { quiz ->
-            QuizListItem(quiz)
-        }
-    }
-}
-
-@Composable
 fun QuizListScreen() {
 
     val context = LocalContext.current as Activity
@@ -122,10 +108,10 @@ fun QuizListScreen() {
 
 
             val sampleQuizzes = listOf(
-                Quiz("Math Challenge", "Mathematics"),
-                Quiz("Science Trivia", "Science"),
-                Quiz("History Quiz", "History"),
-                Quiz("Geography Fun", "Geography")
+                Quiz("Math Challenge", "PMath"),
+                Quiz("Science Trivia", "PScience"),
+                Quiz("History Quiz", "PHistory"),
+                Quiz("Geography Fun", "PGeography")
             )
 
             LazyColumn(
@@ -165,8 +151,10 @@ fun QuizListItem(quiz: Quiz) {
                     fontWeight = FontWeight.Bold,
                     color = Color.Black
                 )
+                var qCategory = quiz.category.substring(1)
+
                 Text(
-                    text = quiz.category,
+                    text = qCategory ,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Medium,
                     color = Color.Gray
@@ -177,7 +165,8 @@ fun QuizListItem(quiz: Quiz) {
                 modifier = Modifier
                     .size(36.dp)
                     .clickable {
-//                        context.finish()
+                        SelectedQuiz.quizCategory=quiz.category
+                        SelectedQuiz.quizName=quiz.name
                         context.startActivity(Intent(context, TakeQuizActivity::class.java))
                         context.finish()
                     },
@@ -196,11 +185,6 @@ data class Quiz(
 @Preview
 @Composable
 fun PreviewQuizList() {
-    val sampleQuizzes = listOf(
-        Quiz("Math Challenge", "Mathematics"),
-        Quiz("Science Trivia", "Science"),
-        Quiz("History Quiz", "History"),
-        Quiz("Geography Fun", "Geography")
-    )
+
     QuizListScreen()
 }

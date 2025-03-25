@@ -26,6 +26,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -142,7 +147,7 @@ fun QuizHomeActivityScreen()
                     Text(
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally),
-                        text = "Quiz Categories",
+                        text = "Quiz\nCategories",
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge.copy(
                             color = Color.White,
@@ -273,6 +278,15 @@ fun QuizHomeActivityScreen()
                             color = colorResource(id = R.color.white),
                             shape = RoundedCornerShape(6.dp)
                         )
+                        .clickable {
+                            context.startActivity(
+                                Intent(
+                                    context,
+                                    UserDataActivity::class.java
+                                )
+                            )
+
+                        }
                         .padding(horizontal = 6.dp, vertical = 12.dp)
 
                 ) {
@@ -300,9 +314,70 @@ fun QuizHomeActivityScreen()
                 }
 
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            QuizAdvantagesCard()
         }
     }
 }
+
+@Composable
+fun QuizAdvantagesCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Quiz Advantages",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            val advantages = listOf(
+                "Enhances learning and retention.",
+                "Boosts problem-solving skills.",
+                "Encourages quick thinking and decision-making."
+            )
+
+            advantages.forEach { advantage ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Check Icon",
+                        tint = Color.Green,
+                        modifier = Modifier.size(20.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Text(
+                        text = advantage,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.DarkGray
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 fun populateQuizData(dbHelper: QuizDatabaseHelper) {
     val questions = listOf(
@@ -617,154 +692,154 @@ fun populateQuizData(dbHelper: QuizDatabaseHelper) {
 
         // Add more questions...
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is 8 + 6?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is 8 + 6?",
             listOf("12", "13", "14", "15"), "14"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is half of 20?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is half of 20?",
             listOf("5", "8", "10", "12"), "10"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "Which of the following is a multiple of 3?",
+        QuizQuestion(0, "Math Quiz", "PMath", "Which of the following is a multiple of 3?",
             listOf("14", "21", "27", "35"), "27"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is 7 × 5?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is 7 × 5?",
             listOf("35", "30", "40", "45"), "35"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "A triangle has how many sides?",
+        QuizQuestion(0, "Math Quiz", "PMath", "A triangle has how many sides?",
             listOf("2", "3", "4", "5"), "3"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is 45 ÷ 9?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is 45 ÷ 9?",
             listOf("5", "6", "7", "8"), "5"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is the place value of 3 in the number 4321?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is the place value of 3 in the number 4321?",
             listOf("Ones", "Tens", "Hundreds", "Thousands"), "Hundreds"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "How many minutes are in one hour?",
+        QuizQuestion(0, "Math Quiz", "PMath", "How many minutes are in one hour?",
             listOf("30 minutes", "45 minutes", "60 minutes", "90 minutes"), "60 minutes"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "Which shape has no corners?",
+        QuizQuestion(0, "Math Quiz", "PMath", "Which shape has no corners?",
             listOf("Square", "Triangle", "Rectangle", "Circle"), "Circle"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is 100 - 37?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is 100 - 37?",
             listOf("57", "63", "67", "73"), "63"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "What is the next number in the sequence: 2, 4, 6, 8, ?",
+        QuizQuestion(0, "Math Quiz", "PMath", "What is the next number in the sequence: 2, 4, 6, 8, ?",
             listOf("9", "10", "11", "12"), "10"),
 
-        QuizQuestion(0, "PMath Quiz", "PMath", "If a chocolate bar costs £2 and you buy 3 bars, how much will you pay?",
+        QuizQuestion(0, "Math Quiz", "PMath", "If a chocolate bar costs £2 and you buy 3 bars, how much will you pay?",
             listOf("£4", "£5", "£6", "£8"), "£6"),
 
 
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What do plants need to make their food?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What do plants need to make their food?",
             listOf("Water and Soil", "Sunlight and Water", "Air and Rocks", "Light and Fire"), "Sunlight and Water"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What gas do humans breathe in to stay alive?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What gas do humans breathe in to stay alive?",
             listOf("Carbon Dioxide", "Oxygen", "Nitrogen", "Helium"), "Oxygen"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "Which part of the plant takes in water from the soil?",
+        QuizQuestion(0, "Science Quiz", "PScience", "Which part of the plant takes in water from the soil?",
             listOf("Roots", "Stem", "Leaves", "Flowers"), "Roots"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What is the largest planet in our solar system?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What is the largest planet in our solar system?",
             listOf("Earth", "Mars", "Jupiter", "Venus"), "Jupiter"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "How many legs does a spider have?",
+        QuizQuestion(0, "Science Quiz", "PScience", "How many legs does a spider have?",
             listOf("6", "8", "10", "12"), "8"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What is the boiling point of water?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What is the boiling point of water?",
             listOf("50°C", "75°C", "100°C", "150°C"), "100°C"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What is the process by which plants release oxygen?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What is the process by which plants release oxygen?",
             listOf("Respiration", "Photosynthesis", "Digestion", "Evaporation"), "Photosynthesis"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What do we call an animal that eats only plants?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What do we call an animal that eats only plants?",
             listOf("Carnivore", "Herbivore", "Omnivore", "Insectivore"), "Herbivore"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What force keeps us on the ground?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What force keeps us on the ground?",
             listOf("Gravity", "Magnetism", "Electricity", "Friction"), "Gravity"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What is the hardest natural substance on Earth?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What is the hardest natural substance on Earth?",
             listOf("Gold", "Iron", "Diamond", "Quartz"), "Diamond"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "Which part of the human body pumps blood?",
+        QuizQuestion(0, "Science Quiz", "PScience", "Which part of the human body pumps blood?",
             listOf("Heart", "Lungs", "Liver", "Stomach"), "Heart"),
 
-        QuizQuestion(0, "PScience Quiz", "PScience", "What is the name of the galaxy we live in?",
+        QuizQuestion(0, "Science Quiz", "PScience", "What is the name of the galaxy we live in?",
             listOf("Andromeda", "Black Hole", "Milky Way", "Orion"), "Milky Way"),
 
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Who was the first king of England?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Who was the first king of England?",
             listOf("Richard I", "Athelstan", "Alfred the Great", "William the Conqueror"), "Athelstan"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "What is the name of the famous prehistoric monument in England?",
+        QuizQuestion(0, "History Quiz", "PHistory", "What is the name of the famous prehistoric monument in England?",
             listOf("Hadrian’s Wall", "The Tower of London", "Stonehenge", "Big Ben"), "Stonehenge"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Who was the Queen of England during the Victorian era?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Who was the Queen of England during the Victorian era?",
             listOf("Elizabeth I", "Anne", "Victoria", "Mary I"), "Victoria"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "In which year did the Battle of Hastings take place?",
+        QuizQuestion(0, "History Quiz", "PHistory", "In which year did the Battle of Hastings take place?",
             listOf("965", "1066", "1215", "1415"), "1066"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Who was the Prime Minister of Britain during World War II?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Who was the Prime Minister of Britain during World War II?",
             listOf("Neville Chamberlain", "Clement Attlee", "Winston Churchill", "Margaret Thatcher"), "Winston Churchill"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "What was the name of the famous ship that sank on its maiden voyage in 1912?",
+        QuizQuestion(0, "History Quiz", "PHistory", "What was the name of the famous ship that sank on its maiden voyage in 1912?",
             listOf("Titanic", "Britannia", "Mayflower", "Endeavour"), "Titanic"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Who built Hadrian’s Wall?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Who built Hadrian’s Wall?",
             listOf("Romans", "Vikings", "Anglo-Saxons", "Normans"), "Romans"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Which famous document, signed in 1215, limited the power of the king?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Which famous document, signed in 1215, limited the power of the king?",
             listOf("The Domesday Book", "Magna Carta", "The Bill of Rights", "The Act of Union"), "Magna Carta"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Who was the first woman Prime Minister of the UK?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Who was the first woman Prime Minister of the UK?",
             listOf("Theresa May", "Margaret Thatcher", "Elizabeth II", "Queen Victoria"), "Margaret Thatcher"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "Which country did the UK fight against in the Falklands War in 1982?",
+        QuizQuestion(0, "History Quiz", "PHistory", "Which country did the UK fight against in the Falklands War in 1982?",
             listOf("France", "Spain", "Argentina", "Germany"), "Argentina"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "What was the name of Henry VIII’s second wife?",
+        QuizQuestion(0, "History Quiz", "PHistory", "What was the name of Henry VIII’s second wife?",
             listOf("Catherine of Aragon", "Anne Boleyn", "Jane Seymour", "Anne of Cleves"), "Anne Boleyn"),
 
-        QuizQuestion(0, "PHistory Quiz", "PHistory", "What was the name of the period when machines and factories changed the way people worked?",
+        QuizQuestion(0, "History Quiz", "PHistory", "What was the name of the period when machines and factories changed the way people worked?",
             listOf("The Renaissance", "The Middle Ages", "The Industrial Revolution", "The Victorian Era"), "The Industrial Revolution"),
 
 
 
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "What is the capital city of England?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "What is the capital city of England?",
             listOf("Manchester", "Birmingham", "London", "Liverpool"), "London"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "Which is the longest river in the UK?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "Which is the longest river in the UK?",
             listOf("Thames", "Severn", "Trent", "Avon"), "Severn"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "What is the highest mountain in the UK?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "What is the highest mountain in the UK?",
             listOf("Ben Nevis", "Snowdon", "Scafell Pike", "Helvellyn"), "Ben Nevis"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "Which ocean is to the west of the UK?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "Which ocean is to the west of the UK?",
             listOf("Indian Ocean", "Atlantic Ocean", "Arctic Ocean", "Pacific Ocean"), "Atlantic Ocean"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "What is the name of the large body of water between England and France?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "What is the name of the large body of water between England and France?",
             listOf("The North Sea", "The Baltic Sea", "The English Channel", "The Irish Sea"), "The English Channel"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "What is the capital city of Scotland?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "What is the capital city of Scotland?",
             listOf("Glasgow", "Edinburgh", "Aberdeen", "Inverness"), "Edinburgh"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "Which country is not part of the United Kingdom?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "Which country is not part of the United Kingdom?",
             listOf("Republic of Ireland", "Scotland", "Wales", "Northern Ireland"), "Republic of Ireland"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "What type of landform is the Isle of Wight?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "What type of landform is the Isle of Wight?",
             listOf("Mountain", "Peninsula", "Island", "Valley"), "Island"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "Which famous river flows through London?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "Which famous river flows through London?",
             listOf("Severn", "Avon", "Thames", "Mersey"), "Thames"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "What is the name of the group of islands to the north of Scotland?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "What is the name of the group of islands to the north of Scotland?",
             listOf("Shetland Islands", "Orkney Islands", "Isle of Man", "Channel Islands"), "Shetland Islands"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "Which national park is located in the Lake District?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "Which national park is located in the Lake District?",
             listOf("Snowdonia", "Lake District National Park", "Peak District", "Dartmoor"), "Lake District National Park"),
 
-        QuizQuestion(0, "PGeography Quiz", "PGeography", "Which continent is the UK located in?",
+        QuizQuestion(0, "Geography Quiz", "PGeography", "Which continent is the UK located in?",
             listOf("Asia", "Africa", "Europe", "Australia"), "Europe"),
 
 

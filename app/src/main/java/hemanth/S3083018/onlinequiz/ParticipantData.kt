@@ -3,36 +3,37 @@ package hemanth.S3083018.onlinequiz
 import android.content.Context
 
 object ParticipantData {
-    fun persistLoginState(context: Context, value: Boolean) {
-        val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
+
+    fun saveLoginState(context: Context, value: Boolean) {
+        val userLogin = context.getSharedPreferences("ONLINE_QUIZ_DATA", Context.MODE_PRIVATE)
         val editor = userLogin.edit()
-        editor.putBoolean("LOGIN_STATUS", value).apply()
+        editor.putBoolean("PSTATUS", value).apply()
     }
 
-    fun fetchLoginState(context: Context): Boolean {
-        val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
-        return userLogin.getBoolean("LOGIN_STATUS", false)
+    fun retrieveLoginState(context: Context): Boolean {
+        val userLogin = context.getSharedPreferences("ONLINE_QUIZ_DATA", Context.MODE_PRIVATE)
+        return userLogin.getBoolean("PSTATUS", false)
     }
 
-    fun persistUserName(context: Context, value: String) {
-        val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
+    fun saveUserName(context: Context, value: String) {
+        val userLogin = context.getSharedPreferences("ONLINE_QUIZ_DATA", Context.MODE_PRIVATE)
         val editor = userLogin.edit()
-        editor.putString("USERNAME", value).apply()
+        editor.putString("PUSERNAME", value).apply()
     }
 
-    fun fetchUserName(context: Context): String {
-        val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
-        return userLogin.getString("USERNAME", "")!!
+    fun retrieveUserName(context: Context): String {
+        val userLogin = context.getSharedPreferences("ONLINE_QUIZ_DATA", Context.MODE_PRIVATE)
+        return userLogin.getString("PUSERNAME", "")!!
     }
 
-    fun persistUserMail(context: Context, value: String) {
-        val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
+    fun saveUserMail(context: Context, value: String) {
+        val userLogin = context.getSharedPreferences("ONLINE_QUIZ_DATA", Context.MODE_PRIVATE)
         val editor = userLogin.edit()
-        editor.putString("USERMAIL", value).apply()
+        editor.putString("PUSERMAIL", value).apply()
     }
 
-    fun fetchUserMail(context: Context): String {
-        val userLogin = context.getSharedPreferences("USER_DETAILS", Context.MODE_PRIVATE)
-        return userLogin.getString("USERMAIL", "")!!
+    fun retrieveUserMail(context: Context): String {
+        val userLogin = context.getSharedPreferences("ONLINE_QUIZ_DATA", Context.MODE_PRIVATE)
+        return userLogin.getString("PUSERMAIL", "")!!
     }
 }

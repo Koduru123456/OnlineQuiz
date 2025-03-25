@@ -231,14 +231,12 @@ fun QuizRegisterScreen() {
 
 fun registerUserOnlineQuiz(userData: UserData, context: Context) {
 
-    val firebaseDatabase = FirebaseDatabase.getInstance()
-    val databaseReference = firebaseDatabase.getReference("OnlineQuizData")
-
-    databaseReference.child(userData.emailId.replace(".", ","))
+    val quizDataBase = FirebaseDatabase.getInstance()
+    quizDataBase.getReference("OnlineQuizData").child(userData.emailId.replace(".", ","))
         .setValue(userData)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(context, "You Registered Successfully", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Successfully Registered", Toast.LENGTH_SHORT)
                     .show()
                 context.startActivity(Intent(context, QuizLoginActivity::class.java))
                 (context as Activity).finish()
@@ -246,7 +244,7 @@ fun registerUserOnlineQuiz(userData: UserData, context: Context) {
             } else {
                 Toast.makeText(
                     context,
-                    "Registration Failed",
+                    "Problem with registration",
                     Toast.LENGTH_SHORT
                 ).show()
             }
